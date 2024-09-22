@@ -29,6 +29,11 @@ aws --endpoint-url=http://localhost:4566 \
     --stream-name ${PREDICTIONS_STREAM_NAME} \
     --shard-count 1
 
+echo "aws stream created"
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis list-streams
+    
 pipenv run python test_docker.py
 
 ERROR_CODE=$?
