@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-cd "$(dirname "$0")"
+
+## github vm has diff root path and don't want to change it
+if [[ -z "${GITHUB_ACTIONS}" ]]; then
+  cd "$(dirname "$0")"
+fi
 
 if [ "${LOCAL_IMAGE_NAME}" == "" ]; then 
     LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
