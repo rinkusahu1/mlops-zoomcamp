@@ -17,7 +17,7 @@ fi
 
 export PREDICTIONS_STREAM_NAME="ride_predictions"
 
-docker-compose up -d
+docker compose up -d
 
 sleep 5
 
@@ -48,4 +48,4 @@ if [ ${ERROR_CODE} != 0 ]; then
 fi
 
 
-docker-compose down
+docker compose down
