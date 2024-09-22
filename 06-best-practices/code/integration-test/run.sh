@@ -19,7 +19,6 @@ fi
 
 
 export PREDICTIONS_STREAM_NAME="ride_predictions"
-export AWS_REGION="eu-north-1"
 
 docker compose up -d
 
@@ -28,8 +27,7 @@ sleep 10
 aws --endpoint-url=http://localhost:4566 \
     kinesis create-stream \
     --stream-name ${PREDICTIONS_STREAM_NAME} \
-    --shard-count 1 \
-    --region $AWS_REGION
+    --shard-count 1 
 
 echo "aws stream created"
 
