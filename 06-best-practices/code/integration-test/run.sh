@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
-cd "$(dirname "$0")"
 
-if [ "${LOCAL_IMAGE_NAME}" == "" ]; then 
+## github vm has diff root path and don't want to change it
+if [ -z "${GITHUB_ACTIONS}" ]; then
+  echo "setting current"
+  cd "$(dirname "$0")"
+fi
+
+echo "local image path ${LOCAL_IMAGE_NAME}"
+
+if [ -z "${LOCAL_IMAGE_NAME}" ]; then 
     LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
     export LOCAL_IMAGE_NAME="stream-model-duration:${LOCAL_TAG}"
     echo "LOCAL_IMAGE_NAME is not set, building a new image with tag ${LOCAL_IMAGE_NAME}"
@@ -13,14 +20,19 @@ fi
 
 export PREDICTIONS_STREAM_NAME="ride_predictions"
 
-docker-compose up -d
+docker compose up -d
 
-sleep 5
+sleep 10 
 
 aws --endpoint-url=http://localhost:4566 \
     kinesis create-stream \
     --stream-name ${PREDICTIONS_STREAM_NAME} \
-    --shard-count 1
+    --shard-count 1 
+
+echo "aws stream created"
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis list-streams
 
 pipenv run python test_docker.py
 
@@ -44,4 +56,4 @@ if [ ${ERROR_CODE} != 0 ]; then
 fi
 
 
-docker-compose down
+docker compose down
