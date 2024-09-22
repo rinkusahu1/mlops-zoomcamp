@@ -8,17 +8,17 @@ from mlflow.tracking import MlflowClient
 MLFLOW_TRACKING_URI = 'http://127.0.0.1:5000'
 RUN_ID = '708d7da218014fbf8e8e5a6c35010253'
 
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.set_experiment("green-taxi-duration")
-client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
+#mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+# mlflow.set_experiment("green-taxi-duration")
+# client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
 
-path = client.download_artifacts(run_id=RUN_ID, path='preprocessor/dict_vectorizer.bin')
-print(f"Download dict vectorizer to {path}")
+# path = client.download_artifacts(run_id=RUN_ID, path='preprocessor/dict_vectorizer.bin')
+# print(f"Download dict vectorizer to {path}")
 
-with open(path, 'rb') as f_in:
-    dv = pickle.load(f_in) 
+# with open(path, 'rb') as f_in:
+#     dv = pickle.load(f_in) 
 
-logged_model = f'runs:/{RUN_ID}/model'
+logged_model = f's3://ml-flow-artifacts-remote445/1/{RUN_ID}/artifacts/model'
 
 # Load model as a PyFuncModel.
 model = mlflow.pyfunc.load_model(logged_model)
