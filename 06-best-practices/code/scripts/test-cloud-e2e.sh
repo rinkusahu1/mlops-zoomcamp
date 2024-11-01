@@ -1,5 +1,5 @@
-export KINESIS_STREAM_INPUT="stg_ride_events_r-mlops-zoomcamp"
-export KINESIS_STREAM_OUTPUT="stg_ride_predictions_r-mlops-zoomcamp"
+export KINESIS_STREAM_INPUT="prod_ride_events_r-mlops-zoomcamp"
+export KINESIS_STREAM_OUTPUT="prod_ride_predictions_r-mlops-zoomcamp"
 
 SHARD_ID=$(aws kinesis put-record  \
         --stream-name ${KINESIS_STREAM_INPUT}   \

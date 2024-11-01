@@ -28,7 +28,6 @@ resource null_resource ecr_image {
    }
 }
 
-
 // Wait for the image to be uploaded, before lambda config runs
 data aws_ecr_image lambda_image {
  depends_on = [
